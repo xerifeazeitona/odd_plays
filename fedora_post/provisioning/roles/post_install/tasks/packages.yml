@@ -1,0 +1,15 @@
+---
+- name: Update the whole system
+  dnf:
+    name: "*"
+    state: latest
+    update_cache: yes
+
+- name: Install extra packages and applications
+  dnf:
+    name: "{{ extra_packages }}"
+    state: present
+
+- name: Autoremove unneded packages installed as dependencies
+  dnf:
+    autoremove: yes
