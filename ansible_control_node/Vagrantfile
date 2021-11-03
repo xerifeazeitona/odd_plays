@@ -4,8 +4,12 @@
 VAGRANT_API_VERSION = "2"
 
 Vagrant.configure(VAGRANT_API_VERSION) do |config|
-  config.vm.define :fedora34 do |f34|
-    f34.vm.box = "generic/fedora34"
+  config.vm.define :ansible_control_node do |acn|
+    acn.vm.box = "generic/fedora34"
+    acn.vm.network :public_network,
+      :dev => "br0",
+      :mode => "bridge",
+      :type => "bridge"
   end
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "setup_ansible_user.yml"
