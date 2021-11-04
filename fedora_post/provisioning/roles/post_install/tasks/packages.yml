@@ -10,6 +10,16 @@
     name: "{{ extra_packages }}"
     state: present
 
+- name: Remove nano-default-editor
+  dnf:
+    name: nano-default-editor
+    state: absent
+
+- name: Set vim as default editor
+  dnf:
+    name: vim-default-editor
+    state: present
+
 - name: Autoremove unneded packages installed as dependencies
   dnf:
     autoremove: yes
