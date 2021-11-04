@@ -1,0 +1,31 @@
+---
+- name: Install Ansible
+  dnf:
+    name: ansible
+    state: present
+
+- name: Install yamllint
+  pip:
+    name: yamllint
+
+- name: Ensure yamllint directory exists
+  file:
+    path: "/home/{{ yamllint_user }}/.config/yamllint"
+    state: directory
+    owner: "{{ yamllint_user }}"
+    group: "{{ yamllint_user }}"
+    mode: '0755'
+
+- name: Check if the configuration file already exists
+  stat:
+    path: "/home/{{ yamllint_user }}/.config/yamllint/config"
+  register: config_file
+
+- name: Copy yamllint configuration file
+  copy:
+    src: files/config
+    dest: "/home/{{ yamllint_user }}/.config/yamllint/config"
+    owner: "{{ yamllint_user }}"
+    group: "{{ yamllint_user }}"
+    mode: '0644'
+  when: not config_file.stat.exists
