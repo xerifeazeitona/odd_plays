@@ -1,22 +1,11 @@
-# Fedora post install
-This project has a single role that does the post install configuration on Fedora hosts.
+# Docker
+This project spins a Docker host.
 
 ## What it does
-### DNF Flags
-- Enable `deltarpm` and `fastestmirror`
-- Set `max_parallel_downloads` to 10
+- Configure the VM with the [post install](https://github.com/xerifeazeitona/odd_plays/tree/main/fedora_post) role.
+- Installs Docker Community Edition using the [repository](https://docs.docker.com/engine/install/fedora/#install-using-the-repository) method.
+- Installs docker-compose following [this](https://docs.docker.com/compose/cli-command/#install-on-linux) instructions.
 
-### Repository setup
-- Enable RPM Fusion repos (free and nonfree)
-- Disable fedora-modular, fedora-cisco-openh264 and testing repos
-- Disable machine counting on all repos
-
-### Package management
-- Update all packages to latest version
-- Install extra packages (tmux, vim and xclip by default)
-- Remove unnecessary packages installed as dependencies but are no longer required (`dnf autoremove`)
-
-### User management
-- Create a user with sudo privileges
-- Copy tmux configuration to user home directory
-- Add xclip aliases to user `.bashrc`
+Extra notes:
+- Docker is installed and enabled as a service but no users are added to the docker group. You can check [here](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user) if you want access to the docker socket without `sudo`.
+- The docker-compose v2 is being installed, if you wish to revert to a v1 version, don't forget to also change the variable *docker_compose_path* to `/usr/local/bin`.
