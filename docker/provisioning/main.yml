@@ -5,3 +5,4 @@
 
   roles:
     - post_install
+    - docker
